@@ -61,6 +61,7 @@ module OAuth::Client
     end
 
     def hash_body
+      return unless @options[:include_body_hash]
       @options[:body_hash] = OAuth::Signature.body_hash(@request, :parameters => oauth_parameters)
     end
 

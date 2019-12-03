@@ -55,13 +55,14 @@ class Net::HTTPGenericRequest
 private
 
   def oauth_helper_options(http, consumer, token, options)
-    { :request_uri      => oauth_full_request_uri(http,options),
-      :consumer         => consumer,
-      :token            => token,
-      :scheme           => 'header',
-      :signature_method => nil,
-      :nonce            => nil,
-      :timestamp        => nil }.merge(options)
+    { :request_uri       => oauth_full_request_uri(http,options),
+      :consumer          => consumer,
+      :token             => token,
+      :scheme            => 'header',
+      :signature_method  => nil,
+      :nonce             => nil,
+      :include_body_hash => true,
+      :timestamp         => nil }.merge(options)
   end
 
   def oauth_full_request_uri(http,options)

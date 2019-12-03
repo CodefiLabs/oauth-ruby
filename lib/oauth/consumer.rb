@@ -384,7 +384,7 @@ module OAuth
 
       if data.is_a?(Hash)
         request.body = OAuth::Helper.normalize(data)
-        request.content_type = 'application/x-www-form-urlencoded'
+        request.content_type = headers["Content-Type"] || 'application/x-www-form-urlencoded'
       elsif data
         if data.respond_to?(:read)
           request.body_stream = data
