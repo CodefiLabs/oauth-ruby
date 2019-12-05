@@ -64,7 +64,7 @@ private
       :signature_method  => nil,
       :nonce             => nil,
       :include_body_hash => true,
-      :escape_token      => nil,
+      :escape_token      => true,
       :timestamp         => nil }.merge(options)
   end
 
