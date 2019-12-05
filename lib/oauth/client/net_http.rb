@@ -112,6 +112,7 @@ private
       return [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
       [escape(k), escape(v)] * "="
     end.join("&")
+    puts "PARAMS STRING: #{oauth_params_str}"
     uri = URI.parse(path)
     if uri.query.to_s == ""
       uri.query = oauth_params_str
