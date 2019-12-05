@@ -60,6 +60,10 @@ module OAuth::Client
       @options[:token_request].eql?(true)
     end
 
+    def escape_token?
+      @options[:escape_token] || true
+    end
+
     def hash_body
       return unless @options[:include_body_hash]
       @options[:body_hash] = OAuth::Signature.body_hash(@request, :parameters => oauth_parameters)

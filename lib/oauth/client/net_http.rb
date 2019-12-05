@@ -62,6 +62,7 @@ private
       :signature_method  => nil,
       :nonce             => nil,
       :include_body_hash => true,
+      :escape_token      => true,
       :timestamp         => nil }.merge(options)
   end
 
@@ -107,7 +108,10 @@ private
   end
 
   def set_oauth_query_string
-    oauth_params_str = @oauth_helper.oauth_parameters.map { |k,v| [escape(k), escape(v)] * "=" }.join("&")
+    oauth_params_str = @oauth_helper.oauth_parameters.map do |k,v|
+      return [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
+      [escape(k), escape(v)] * "="
+    end.join("&")
     uri = URI.parse(path)
     if uri.query.to_s == ""
       uri.query = oauth_params_str
