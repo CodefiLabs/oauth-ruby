@@ -115,9 +115,10 @@ private
       puts "KEY: #{k}:#{v}"
       if k == 'oauth_token' && !@oauth_helper.escape_token?
         puts "in oauth token #{k}"
-        return [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
+        [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
+      else
+        [escape(k), escape(v)] * "="
       end
-      [escape(k), escape(v)] * "="
     end.join("&")
     puts "PARAMS STRING: #{oauth_params_str}"
     uri = URI.parse(path)
