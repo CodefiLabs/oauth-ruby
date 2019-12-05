@@ -159,7 +159,6 @@ private
 
     @path = uri.to_s
     puts "PATH: #{@path}"
-
-    @path << "&oauth_signature=#{escape(oauth_helper.signature)}"
+    @path
   end
 end
