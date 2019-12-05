@@ -24,6 +24,7 @@ class Net::HTTPGenericRequest
   #                                                 http://oauth.googlecode.com/svn/spec/ext/body_hash/1.0/oauth-bodyhash.html#when_to_include]
   def oauth!(http, consumer = nil, token = nil, options = {})
     helper_options = oauth_helper_options(http, consumer, token, options)
+    puts helper_options.inspect
     @oauth_helper = OAuth::Client::Helper.new(self, helper_options)
     @oauth_helper.amend_user_agent_header(self)
     @oauth_helper.hash_body if oauth_body_hash_required?
@@ -55,6 +56,7 @@ class Net::HTTPGenericRequest
 private
 
   def oauth_helper_options(http, consumer, token, options)
+    puts options.inspect
     { :request_uri       => oauth_full_request_uri(http,options),
       :consumer          => consumer,
       :token             => token,
@@ -62,7 +64,7 @@ private
       :signature_method  => nil,
       :nonce             => nil,
       :include_body_hash => true,
-      :escape_token      => true,
+      :escape_token      => nil,
       :timestamp         => nil }.merge(options)
   end
 
