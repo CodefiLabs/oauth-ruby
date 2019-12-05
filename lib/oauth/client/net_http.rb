@@ -108,9 +108,10 @@ private
   end
 
   def set_oauth_query_string
+    puts "ESCAPE?: #{@oauth_helper.escape_token?}"
     oauth_params_str = @oauth_helper.oauth_parameters.map do |k,v|
       puts "KEY: #{k}:#{v}"
-      if k == "oauth_token" && !@oauth_helper.escape_token?
+      if k == 'oauth_token' && !@oauth_helper.escape_token?
         puts "in oauth token #{k}"
         return [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
       end
