@@ -61,7 +61,7 @@ module OAuth::Client
     end
 
     def escape_token?
-      @options[:escape_token] || true
+      !!@options[:escape_token]
     end
 
     def hash_body
