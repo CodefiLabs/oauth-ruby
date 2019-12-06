@@ -158,7 +158,7 @@ private
     end
 
     @path = uri.to_s
-    uri.query + "&oauth_signature=#{escape(oauth_helper.signature)}"
+    uri.query = uri.query + "&oauth_signature=#{escape(oauth_helper.signature)}"
     uri.query = uri.query.split("&").sort().join("&")
     @path = uri.to_s
     puts "PATH: #{@path}"
