@@ -111,7 +111,6 @@ private
     return sorted_params unless @oauth_helper.escape_token?
     oauth_params_str = @oauth_helper.oauth_parameters.map do |k,v|
       if k == 'oauth_token' && !@oauth_helper.escape_token?
-        puts "in oauth token #{k}"
         [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
       else
         [escape(k), escape(v)] * "="
@@ -135,7 +134,6 @@ private
     .to_h
     .map do |k, v|
       if k == 'oauth_token' && !@oauth_helper.escape_token?
-        puts "in oauth token #{k}"
         [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
       else
         [escape(k), escape(v)] * "="
