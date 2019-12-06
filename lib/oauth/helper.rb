@@ -53,7 +53,8 @@ module OAuth
         elsif values.is_a?(Hash)
           normalize_nested_query(values, k)
         else
-          if key == "oauth_token"
+          puts "Normalize Key: #{k} #{values}"
+          if k == "oauth_token"
             [escape(k), values] * "="
           else
             [escape(k),escape(values)] * "="
