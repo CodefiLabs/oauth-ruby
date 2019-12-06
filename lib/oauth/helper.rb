@@ -49,7 +49,11 @@ module OAuth
           values << nil if values.empty?
           # multiple values were provided for a single key
           values.sort.collect do |v|
-            [escape(k),escape(v)] * "="
+            if k == "oauth_token"
+              [escape(k), values] * "="
+            else
+              [escape(k),escape(values)] * "="
+            end
           end
         elsif values.is_a?(Hash)
           normalize_nested_query(values, k)
