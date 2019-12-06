@@ -136,7 +136,7 @@ private
   end
 
   def sorted_params
-    oauth_params = @oauth_helper.oauth_parameters
+    oauth_params_str = @oauth_helper.oauth_parameters
     .sort
     .to_h
     .map do |k, v|
@@ -147,11 +147,8 @@ private
       else
         [escape(k), escape(v)] * "="
       end
-    end
+    end.join('&')
 
-    signature = @oauth_helper.signature({ unsigned_parameters: oauth_params })
-    oauth_params << "oauth_signature=#{signature}"
-    oauth_params_str = oauth_params.sort().join('&')
     puts "PARAMS STRING: #{oauth_params_str}"
     uri = URI.parse(path)
     if uri.query.to_s == ""
@@ -160,6 +157,9 @@ private
       uri.query = uri.query + "&" + oauth_params_str
     end
 
+    @path = uri.to_s
+    uri.query + "&oauth_signature=#{escape(oauth_helper.signature)}"
+    uri.query = uri.query.split("&").sort().join("&")
     @path = uri.to_s
     puts "PATH: #{@path}"
     @path

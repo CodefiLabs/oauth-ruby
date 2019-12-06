@@ -76,7 +76,7 @@ module OAuth::RequestProxy
     end
 
     def parameters_for_signature
-      parameters + unsigned_parameters
+      parameters
       # parameters.select { |k,v| not signature_and_unsigned_parameters.include?(k) }
     end
 
