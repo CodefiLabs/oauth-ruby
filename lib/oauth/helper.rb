@@ -43,6 +43,7 @@ module OAuth
     # See Also: {OAuth core spec version 1.0, section 9.1.1}[http://oauth.net/core/1.0#rfc.section.9.1.1]
     def normalize(params)
       params.sort.map do |k, values|
+        puts "NORMALIZE: #{k}, #{values.inspect}, #{values.class}"
         if values.is_a?(Array)
           # make sure the array has an element so we don't lose the key
           values << nil if values.empty?
