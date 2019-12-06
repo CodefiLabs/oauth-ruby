@@ -24,7 +24,6 @@ class Net::HTTPGenericRequest
   #                                                 http://oauth.googlecode.com/svn/spec/ext/body_hash/1.0/oauth-bodyhash.html#when_to_include]
   def oauth!(http, consumer = nil, token = nil, options = {})
     helper_options = oauth_helper_options(http, consumer, token, options)
-    puts helper_options.inspect
     @oauth_helper = OAuth::Client::Helper.new(self, helper_options)
     @oauth_helper.amend_user_agent_header(self)
     @oauth_helper.hash_body if oauth_body_hash_required?
@@ -56,7 +55,6 @@ class Net::HTTPGenericRequest
 private
 
   def oauth_helper_options(http, consumer, token, options)
-    puts options.inspect
     { :request_uri       => oauth_full_request_uri(http,options),
       :consumer          => consumer,
       :token             => token,
@@ -110,10 +108,8 @@ private
   end
 
   def set_oauth_query_string
-    puts "ESCAPE?: #{@oauth_helper.escape_token?}"
     return sorted_params unless @oauth_helper.escape_token?
     oauth_params_str = @oauth_helper.oauth_parameters.map do |k,v|
-      puts "KEY: #{k}:#{v}"
       if k == 'oauth_token' && !@oauth_helper.escape_token?
         puts "in oauth token #{k}"
         [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
@@ -121,7 +117,6 @@ private
         [escape(k), escape(v)] * "="
       end
     end.join("&")
-    puts "PARAMS STRING: #{oauth_params_str}"
     uri = URI.parse(path)
     if uri.query.to_s == ""
       uri.query = oauth_params_str
@@ -130,7 +125,6 @@ private
     end
 
     @path = uri.to_s
-    puts "PATH: #{@path}"
 
     @path << "&oauth_signature=#{escape(oauth_helper.signature)}"
   end
@@ -140,7 +134,6 @@ private
     .sort
     .to_h
     .map do |k, v|
-      puts "KEY: #{k}:#{v}"
       if k == 'oauth_token' && !@oauth_helper.escape_token?
         puts "in oauth token #{k}"
         [escape(k), v] * "=" if k == "oauth_token" && !@oauth_helper.escape_token?
@@ -149,7 +142,6 @@ private
       end
     end.join('&')
 
-    puts "PARAMS STRING: #{oauth_params_str}"
     uri = URI.parse(path)
     if uri.query.to_s == ""
       uri.query = oauth_params_str
@@ -161,7 +153,5 @@ private
     uri.query = uri.query + "&oauth_signature=#{escape(oauth_helper.signature)}"
     uri.query = uri.query.split("&").sort().join("&")
     @path = uri.to_s
-    puts "PATH: #{@path}"
-    @path
   end
 end

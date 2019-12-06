@@ -43,7 +43,6 @@ module OAuth
     # See Also: {OAuth core spec version 1.0, section 9.1.1}[http://oauth.net/core/1.0#rfc.section.9.1.1]
     def normalize(params)
       params.sort.map do |k, values|
-        puts "NORMALIZE: #{k}, #{values.inspect}, #{values.class}"
         if values.is_a?(Array)
           # make sure the array has an element so we don't lose the key
           values << nil if values.empty?
@@ -58,7 +57,6 @@ module OAuth
         elsif values.is_a?(Hash)
           normalize_nested_query(values, k)
         else
-          puts "Normalize Key: #{k} #{values}"
           if k == "oauth_token"
             [escape(k), values] * "="
           else
