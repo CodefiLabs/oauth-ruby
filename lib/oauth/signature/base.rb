@@ -47,7 +47,9 @@ module OAuth::Signature
     end
 
     def signature
-      Base64.encode64(digest).chomp.gsub(/\n/,'')
+      result = Base64.encode64(digest).chomp.gsub(/\n/,'')
+      puts "SIGNATURE: #{result}"
+      result
     end
 
     def ==(cmp_signature)

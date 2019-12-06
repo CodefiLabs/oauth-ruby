@@ -11,7 +11,10 @@ module OAuth::Signature::HMAC
     private
 
     def digest
-      OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), secret, signature_base_string)
+      puts "DIGEST: #{secret}, #{signature_base_string}"
+      result = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), secret, signature_base_string)
+      puts "DIGEST RESULT: #{result}"
+      result
     end
   end
 end
