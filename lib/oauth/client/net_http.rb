@@ -111,7 +111,7 @@ private
 
   def set_oauth_query_string
     puts "ESCAPE?: #{@oauth_helper.escape_token?}"
-    # return sorted_params unless @oauth_helper.escape_token?
+    return sorted_params unless @oauth_helper.escape_token?
     oauth_params_str = @oauth_helper.oauth_parameters.map do |k,v|
       puts "KEY: #{k}:#{v}"
       if k == 'oauth_token' && !@oauth_helper.escape_token?
@@ -136,8 +136,7 @@ private
   end
 
   def sorted_params
-    oauth_params_str = @oauth_helper.oauth_parameters
-    .merge({'oauth_signature' => oauth_helper.signature})
+    oauth_params = @oauth_helper.oauth_parameters
     .sort
     .to_h
     .map do |k, v|
@@ -148,7 +147,11 @@ private
       else
         [escape(k), escape(v)] * "="
       end
-    end.join("&")
+    end
+
+    signature = @oauth_helper.signature({ unsigned_parameters: oauth_params })
+    oauth_params << "oauth_signature=#{signature}"
+    oauth_params_str = oauth_params.sort().join('&')
     puts "PARAMS STRING: #{oauth_params_str}"
     uri = URI.parse(path)
     if uri.query.to_s == ""
