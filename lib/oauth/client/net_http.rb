@@ -71,17 +71,17 @@ private
     uri.host = http.address
     uri.port = http.port
 
-    if options[:request_endpoint] && options[:site]
-      is_https = options[:site].match(%r(^https://))
+#     if options[:request_endpoint] && options[:site]
+      is_https = true
       uri.host = options[:site].gsub(%r(^https?://), '')
       uri.port ||= is_https ? 443 : 80
-    end
+#     end
 
-    if http.respond_to?(:use_ssl?) && http.use_ssl?
+#     if http.respond_to?(:use_ssl?) && http.use_ssl?
       uri.scheme = "https"
-    else
-      uri.scheme = "http"
-    end
+#     else
+#       uri.scheme = "http"
+#     end
 
     uri.to_s
   end
