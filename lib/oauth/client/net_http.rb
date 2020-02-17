@@ -73,7 +73,7 @@ private
 
 #     if options[:request_endpoint] && options[:site]
       is_https = true
-      uri.host = options[:site].gsub(%r(^https?://), '')
+#       uri.host = options[:site].gsub(%r(^https?://), '')
       uri.port ||= is_https ? 443 : 80
 #     end
 
