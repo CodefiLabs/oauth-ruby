@@ -95,11 +95,11 @@ class EventMachine::HttpClient
     uri.host = http.address
     uri.port = http.port
 
-    if http.respond_to?(:use_ssl?) && http.use_ssl?
+#     if http.respond_to?(:use_ssl?) && http.use_ssl?
       uri.scheme = "https"
-    else
-      uri.scheme = "http"
-    end
+#     else
+#       uri.scheme = "http"
+#     end
     uri.to_s
   end
 
